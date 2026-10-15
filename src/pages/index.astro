@@ -106,16 +106,14 @@ const tiers = [
           </p>
         </div>
         <div class="col-demo">
-          <div class="term">
-            <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-title">token-hunt watch ~/.claude/projects/</span></div>
-            <pre><code><span class="t-dim">$</span> echo "ANTHROPIC_API_KEY=sk-ant-…" > notes.txt
-<span class="t-dim">$</span> token-hunt scan notes.txt
-
-<span class="t-accent">● LEAK</span> <span class="t-red">anthropic_api_key</span>  notes.txt:1
-  <span class="t-dim">fingerprint</span> 9f2c…e41a   <span class="t-dim">action</span> <span class="t-red">BLOCKED</span>
-  <span class="t-dim">→</span> rotate at console.anthropic.com, then:
-<span class="t-dim">$</span> token-hunt close 1 --note "rotated"</code></pre>
-          </div>
+          <img
+            class="demo-gif"
+            src="/demo.gif"
+            alt="token-hunt watch catching an Anthropic API key leak in real time, then scan reporting the finding with a rotate URL"
+            width="1000"
+            height="560"
+            loading="lazy"
+          />
         </div>
       </section>
 
@@ -358,6 +356,13 @@ const tiers = [
         align-items: center;
       }
       .col-head p { color: var(--muted); margin-top: 1.25rem; max-width: 40ch; }
+      .demo-gif {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+      }
       .term {
         background: var(--surface);
         border: 1px solid var(--border);
