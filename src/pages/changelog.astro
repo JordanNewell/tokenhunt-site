@@ -1,0 +1,225 @@
+---
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
+import '@fontsource/jetbrains-mono/700.css';
+import '@fontsource/jetbrains-mono/800.css';
+
+const releases = [
+  {
+    v: 'unreleased',
+    date: null,
+    items: [
+      'Provider coverage expanded <strong>12 → 37 rules</strong> for LLM-inference parity: OpenRouter, Groq, Together, Fireworks, xAI, Perplexity, Hugging Face, Cerebras, Replicate, Vercel AI Gateway, NVIDIA NIM, Chutes, Requesty, Novita, Upstage, Baseten, Baidu Qianfan, fal.ai, DashScope, Moonshot Kimi, Mistral, Cohere, Scaleway.',
+      'Generic fallback rules: unattributed <code>sk-</code> 32-char key shape and generic JWT.',
+      'OpenAI rule tightened to the <code>T3BlbkFJ</code> marker — no longer double-fires with the generic <code>sk-</code> rule.',
+      'Prefixless and generic-prefix shapes are keyword-gated: the provider name must appear in the scanned text before the regex is tried.',
+      'Providers with no publicly documented key format get keyword-gated opaque rules — attribution + rotation URL, not shape confidence. No guessed regexes, ever.',
+    ],
+    next: [
+      'Silent redaction via <code>updatedToolOutput</code> for PostToolUse hooks — the agent never sees the raw value.',
+      'Active verification mode — "is this key actually live?"',
+      '<code>--file-path</code> flag on <code>scan --stdin</code> for path-based allowlists.',
+    ],
+  },
+  {
+    v: '0.1.0',
+    date: '2026-07-27',
+    items: [
+      'Initial release.',
+      'Detection core: regex patterns (12 built-in providers), bash escape-hatch detector, entropy candidates.',
+      'Claude Code plugin with 6 hook scripts covering 8 detection rows.',
+      'CLI peer with <code>scan</code>, <code>list</code>, <code>close</code>, <code>watch</code> commands.',
+      'Pattern layering: builtin → <code>~/.token-hunt/patterns.local.toml</code> → <code>./.token-hunt/patterns.local.toml</code>.',
+      'Allowlist engine (path-based + fingerprint-based).',
+      '<code>rotations.log</code> JSONL store with 72-hour OVERDUE tracking.',
+      'Bash escape-hatch detection — the <code>${VAR:+SET}${VAR:-UNSET}</code> bug class no regex scanner sees.',
+      '<code>TOKEN_HUNT_DISABLE=1</code> opt-out · <code>TOKEN_HUNT_ALLOW=1</code> one-shot bypass.',
+      'Fail-closed: scanner crashes BLOCK with a bypass hint, never silently allow.',
+    ],
+  },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Changelog — TokenHunt</title>
+    <meta name="description" content="Every change to token-hunt, documented. Keep a Changelog format, semantic versioning." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content="Changelog — TokenHunt" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tokenhunt.dev/changelog.html" />
+    <meta property="og:image" content="https://tokenhunt.dev/og.png" />
+  </head>
+  <body>
+    <a class="site-mark" href="/">
+      <svg viewBox="0 0 48 48" role="img" aria-label="tokenhunt mark">
+        <circle cx="24" cy="24" r="17" fill="none" stroke="currentColor" stroke-width="3.5" />
+        <line x1="24" y1="1" x2="24" y2="12" stroke="currentColor" stroke-width="3.5" />
+        <line x1="24" y1="36" x2="24" y2="47" stroke="currentColor" stroke-width="3.5" />
+        <line x1="1" y1="24" x2="12" y2="24" stroke="currentColor" stroke-width="3.5" />
+        <line x1="36" y1="24" x2="47" y2="24" stroke="currentColor" stroke-width="3.5" />
+        <circle cx="24" cy="24" r="4.5" fill="currentColor" />
+      </svg>
+      <span class="cl">home</span>
+    </a>
+
+    <main class="container">
+      <p class="kicker">changelog</p>
+      <h1>Every change, documented.</h1>
+      <p class="sub">Keep a Changelog format · semantic versioning · <a href="https://github.com/JordanNewell/token-hunt/blob/main/CHANGELOG.md">raw on GitHub</a></p>
+
+      {releases.map((r) => (
+        <section class="release">
+          <div class="rel-head">
+            <h2>
+              {r.v === 'unreleased' ? <span class="unrel">unreleased</span> : <span class="ver">v{r.v}</span>}
+              {r.date && <time datetime={r.date}>{r.date}</time>}
+            </h2>
+          </div>
+          <ul>
+            {r.items.map((item) => <li set:html={item} />)}
+          </ul>
+          {r.next && (
+            <div class="planned">
+              <p class="planned-h">planned next</p>
+              <ul class="planned-list">
+                {r.next.map((item) => <li set:html={item} />)}
+              </ul>
+            </div>
+          )}
+        </section>
+      ))}
+
+      <p class="back"><a href="/">← back to tokenhunt.dev</a></p>
+    </main>
+
+    <style>
+      :root {
+        --bg: #0C0D10;
+        --surface: #121317;
+        --border: #1F2126;
+        --text: #F4F3EF;
+        --muted: #8A8F98;
+        --accent: #FF5A1F;
+        --alert: #E5484D;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 0.95rem;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+        padding-block: 4rem 6rem;
+      }
+      ::selection { background: var(--accent); color: var(--bg); }
+      :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+      code {
+        font-size: 0.9em;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.1em 0.35em;
+      }
+      a { color: inherit; }
+      .container { max-width: 46rem; margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 2rem); }
+
+      .site-mark {
+        position: absolute;
+        top: 2rem;
+        right: clamp(1.25rem, 4vw, 2rem);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.6rem;
+        text-decoration: none;
+      }
+      .site-mark svg { width: 36px; height: 36px; color: var(--accent); }
+      .site-mark .cl {
+        font-size: 0.68rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+      }
+      .site-mark:hover .cl { color: var(--accent); }
+
+      .kicker {
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.75rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+      }
+      h1 {
+        font-size: clamp(1.8rem, 5vw, 2.6rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        margin-bottom: 0.75rem;
+      }
+      .sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 4rem; }
+      .sub a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+      .sub a:hover { color: var(--accent); }
+
+      .release { border-top: 1px solid var(--border); padding-block: 2.5rem; }
+      .rel-head h2 {
+        font-size: 1.15rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        display: flex;
+        align-items: baseline;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+      }
+      .ver { color: var(--accent); }
+      .unrel {
+        color: var(--bg);
+        background: var(--accent);
+        padding: 0.1em 0.5em;
+        border-radius: 4px;
+        font-size: 0.85em;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      time { color: var(--muted); font-weight: 400; font-size: 0.8rem; }
+      ul { list-style: none; }
+      ul li { padding-left: 1.4rem; position: relative; margin-bottom: 0.6rem; }
+      ul li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.65em;
+        width: 0.45rem;
+        height: 2px;
+        background: var(--muted);
+      }
+      .release li strong { color: var(--accent); font-weight: 700; }
+
+      .planned {
+        margin-top: 1.75rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.25rem 1.5rem;
+        background: var(--surface);
+      }
+      .planned-h {
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.7rem;
+        font-weight: 500;
+        margin-bottom: 0.75rem;
+      }
+      .planned-list li::before { background: var(--accent); }
+
+      .back { margin-top: 3rem; font-size: 0.85rem; }
+      .back a { color: var(--muted); text-decoration: none; }
+      .back a:hover { color: var(--accent); }
+    </style>
+  </body>
+</html>

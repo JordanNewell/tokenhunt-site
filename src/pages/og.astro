@@ -1,0 +1,49 @@
+---
+import '@fontsource/jetbrains-mono/700.css';
+import '@fontsource/jetbrains-mono/800.css';
+---
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8" /></head>
+  <body>
+    <div class="card">
+      <i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i>
+      <h1>t<svg viewBox="0 0 48 48" class="reticle" aria-hidden="true">
+        <circle cx="24" cy="24" r="17" fill="none" stroke="currentColor" stroke-width="3.5"/>
+        <line x1="24" y1="1" x2="24" y2="12" stroke="currentColor" stroke-width="3.5"/>
+        <line x1="24" y1="36" x2="24" y2="47" stroke="currentColor" stroke-width="3.5"/>
+        <line x1="1" y1="24" x2="12" y2="24" stroke="currentColor" stroke-width="3.5"/>
+        <line x1="36" y1="24" x2="47" y2="24" stroke="currentColor" stroke-width="3.5"/>
+        <circle cx="24" cy="24" r="4.5" fill="currentColor"/>
+      </svg>kenhunt</h1>
+      <p>catch secrets at <em>chat time</em>, not commit time</p>
+      <div class="rule"></div>
+      <span class="cmd">$ pip install token-hunt</span>
+    </div>
+    <style is:global>
+      * { margin: 0; }
+      body { background: #0C0D10; }
+      .card {
+        width: 1200px; height: 630px;
+        background: #0C0D10; color: #F4F3EF;
+        font-family: 'JetBrains Mono', monospace;
+        position: relative;
+        padding: 96px 110px;
+        box-sizing: border-box;
+        display: flex; flex-direction: column; justify-content: center;
+      }
+      .c { position: absolute; width: 44px; height: 44px; border: 0 solid #FF5A1F; }
+      .tl { top: 40px; left: 40px; border-top-width: 3px; border-left-width: 3px; }
+      .tr { top: 40px; right: 40px; border-top-width: 3px; border-right-width: 3px; }
+      .bl { bottom: 40px; left: 40px; border-bottom-width: 3px; border-left-width: 3px; }
+      .br { bottom: 40px; right: 40px; border-bottom-width: 3px; border-right-width: 3px; }
+      h1 { font-size: 108px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+      .reticle { width: 1ch; height: 1ch; color: #FF5A1F; vertical-align: -0.06em; margin: 0 0.02em; }
+      p { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-top: 36px; }
+      em { font-style: normal; color: #FF5A1F; }
+      .rule { width: 88px; height: 5px; background: #FF5A1F; margin-top: 44px; }
+      .cmd { margin-top: 28px; font-size: 22px; font-weight: 700; color: #8A8F98; }
+      .cmd::first-letter { color: #FF5A1F; }
+    </style>
+  </body>
+</html>

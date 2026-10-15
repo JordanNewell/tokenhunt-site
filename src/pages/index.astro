@@ -1,0 +1,517 @@
+---
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
+import '@fontsource/jetbrains-mono/700.css';
+import '@fontsource/jetbrains-mono/800.css';
+
+const hooks = [
+  { hook: 'UserPromptSubmit', sees: 'your paste', action: 'WARN', level: 'warn' },
+  { hook: 'PreToolUse:Bash', sees: 'command about to run', action: 'BLOCK', level: 'block' },
+  { hook: 'PostToolUse:Bash', sees: 'command output', action: 'WARN + log', level: 'warn' },
+  { hook: 'PostToolUse:Read', sees: 'file contents', action: 'WARN + log', level: 'warn' },
+  { hook: 'PreToolUse:Edit/Write', sees: 'new file content', action: 'BLOCK', level: 'block' },
+  { hook: 'PostToolUse:Edit/Write', sees: 'echo', action: 'WARN + log', level: 'warn' },
+];
+
+const tiers = [
+  {
+    n: '01',
+    name: 'token-hunt',
+    tag: 'free · MIT',
+    desc: 'The engine. CLI (scan / list / close / watch), six hooks with block-and-rotate behavior, the allowlist, and the bash escape-hatch runtime detector no regex can see.',
+    cta: 'github.com/JordanNewell/token-hunt',
+    href: 'https://github.com/JordanNewell/token-hunt',
+  },
+  {
+    n: '02',
+    name: 'pat-scanner',
+    tag: 'free · MIT',
+    desc: 'The one-command plugin. One hook, 13 credential classes, regex matching. Install it and you\'re covered. The guard, without the workflow.',
+    cta: 'github.com/JordanNewell/pat-scanner',
+    href: 'https://github.com/JordanNewell/pat-scanner',
+  },
+  {
+    n: '03',
+    name: 'token-hunt-pro',
+    tag: 'commercial',
+    desc: 'Silent redaction — the agent never sees the raw value. Active verification — checks whether a found key is actually live against GitHub, Stripe, and Slack. Offline ed25519 licensing. Zero phone-home.',
+    cta: 'join the waitlist — info@tokenhunt.dev',
+    href: 'mailto:info@tokenhunt.dev?subject=token-hunt-pro%20waitlist',
+  },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TokenHunt — catch secrets at chat time, not commit time</title>
+    <meta name="description" content="Hook-based secret scanner for AI coding agents. token-hunt catches leaks when you paste, when your agent reads, and when its tools return — not at commit time." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content="TokenHunt — catch secrets at chat time" />
+    <meta property="og:description" content="Secret scanning for the agentic era. Six hooks. Fail-closed. Zero cloud." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tokenhunt.dev/" />
+    <meta property="og:image" content="https://tokenhunt.dev/og.png" />
+  </head>
+  <body>
+    <!-- ============ hero ============ -->
+    <header class="hero container">
+      <div class="frame" aria-hidden="true">
+        <i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i>
+      </div>
+      <a class="site-mark reveal" href="/changelog.html">
+        <svg viewBox="0 0 48 48" role="img" aria-label="tokenhunt mark">
+          <circle cx="24" cy="24" r="17" fill="none" stroke="currentColor" stroke-width="3.5" />
+          <line x1="24" y1="1" x2="24" y2="12" stroke="currentColor" stroke-width="3.5" />
+          <line x1="24" y1="36" x2="24" y2="47" stroke="currentColor" stroke-width="3.5" />
+          <line x1="1" y1="24" x2="12" y2="24" stroke="currentColor" stroke-width="3.5" />
+          <line x1="36" y1="24" x2="47" y2="24" stroke="currentColor" stroke-width="3.5" />
+          <circle cx="24" cy="24" r="4.5" fill="currentColor" />
+        </svg>
+        <span class="cl">changelog</span>
+      </a>
+      <p class="kicker reveal">secret scanning for the agentic era</p>
+      <h1 class="reveal wordmark" aria-label="tokenhunt">
+        t<svg class="reticle" viewBox="0 0 48 48" role="presentation" aria-hidden="true">
+          <circle cx="24" cy="24" r="17" fill="none" stroke="currentColor" stroke-width="3.5" />
+          <line x1="24" y1="1"  x2="24" y2="12" stroke="currentColor" stroke-width="3.5" />
+          <line x1="24" y1="36" x2="24" y2="47" stroke="currentColor" stroke-width="3.5" />
+          <line x1="1"  y1="24" x2="12" y2="24" stroke="currentColor" stroke-width="3.5" />
+          <line x1="36" y1="24" x2="47" y2="24" stroke="currentColor" stroke-width="3.5" />
+          <circle cx="24" cy="24" r="4.5" fill="currentColor" />
+        </svg>kenhunt
+      </h1>
+      <p class="tagline reveal">Catch secrets at <em>chat time</em>, not commit time.</p>
+      <p class="lede reveal">
+        By the time you run <code>git commit</code>, your key has been sitting in the agent
+        transcript for 30 minutes — indexed, synced, maybe re-emitted by a later tool call.
+        token-hunt fires while it's happening.
+      </p>
+      <div class="install reveal" role="group" aria-label="install command">
+        <span class="prompt">$</span><code>pip install token-hunt</code>
+        <span class="hint"># zero cloud · zero telemetry · fail-closed</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============ why ============ -->
+      <section class="why container">
+        <div class="col-head">
+          <h2>Scanners watch git.<br />Your keys live in chat.</h2>
+          <p>
+            gitleaks and trufflehog scan history. The transcript is the new leak surface —
+            pastes, file reads, tool output. token-hunt hooks the agent runtime itself,
+            at all six points a secret can enter.
+          </p>
+        </div>
+        <div class="col-demo">
+          <div class="term">
+            <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-title">token-hunt watch ~/.claude/projects/</span></div>
+            <pre><code><span class="t-dim">$</span> echo "ANTHROPIC_API_KEY=sk-ant-…" > notes.txt
+<span class="t-dim">$</span> token-hunt scan notes.txt
+
+<span class="t-accent">● LEAK</span> <span class="t-red">anthropic_api_key</span>  notes.txt:1
+  <span class="t-dim">fingerprint</span> 9f2c…e41a   <span class="t-dim">action</span> <span class="t-red">BLOCKED</span>
+  <span class="t-dim">→</span> rotate at console.anthropic.com, then:
+<span class="t-dim">$</span> token-hunt close 1 --note "rotated"</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ hooks ============ -->
+      <section class="hooks container">
+        <h2><span class="sec-num">01</span> Six hooks. Every entry point.</h2>
+        <table>
+          <thead>
+            <tr><th>hook</th><th>what it sees</th><th>action on leak</th></tr>
+          </thead>
+          <tbody>
+            {hooks.map((h) => (
+              <tr>
+                <td><code>{h.hook}</code></td>
+                <td class="dim">{h.sees}</td>
+                <td><span class={`sev sev-${h.level}`}>{h.action}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ============ escape hatch ============ -->
+      <section class="escape container">
+        <h2><span class="sec-num">02</span> Catches what regex can't.</h2>
+        <p class="escape-lede">
+          Bash evaluates secrets into emitted text with no literal in sight. token-hunt
+          runs a runtime detector for the escape-hatch class — no other scanner sees it.
+        </p>
+        <div class="escape-grid">
+          <div class="escape-col">
+            <p class="escape-tag blocked">BLOCKED</p>
+            <pre><code>echo ${'{'}ANTHROPIC_API_KEY:+SET{'}'}<br />${'{'}ANTHROPIC_API_KEY:-UNSET{'}'}</code></pre>
+            <p class="escape-why">both branches run — the value leaks</p>
+          </div>
+          <div class="escape-col">
+            <p class="escape-tag blocked">BLOCKED</p>
+            <pre><code>echo $GITHUB_TOKEN</code></pre>
+            <p class="escape-why">direct echo of a secret var</p>
+          </div>
+          <div class="escape-col ok">
+            <p class="escape-tag allowed">ALLOWED</p>
+            <pre><code>[ -n "$ANTHROPIC_API_KEY" ] \<br />  && echo SET</code></pre>
+            <p class="escape-why">status check — no value emitted</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ tiers ============ -->
+      <section class="tiers container">
+        <h2><span class="sec-num">03</span> Three shapes. One hunt.</h2>
+        {tiers.map((t) => (
+          <a class="tier" href={t.href}>
+            <span class="tier-n">{t.n}</span>
+            <span class="tier-body">
+              <span class="tier-name">{t.name}</span>
+              <span class="tier-tag">{t.tag}</span>
+              <span class="tier-desc">{t.desc}</span>
+            </span>
+            <span class="tier-cta">→</span>
+          </a>
+        ))}
+      </section>
+
+      <!-- ============ providers ============ -->
+      <section class="providers container">
+        <p class="providers-label">11 providers built in</p>
+        <ul>
+          <li>Z.ai</li><li>Anthropic</li><li>GitHub</li><li>GitLab</li><li>Figma</li>
+          <li>PyPI</li><li>npm</li><li>Linear</li><li>Stripe</li><li>OpenAI</li>
+          <li>Slack</li>
+        </ul>
+      </section>
+    </main>
+
+    <!-- ============ footer ============ -->
+    <footer class="footer container">
+      <div class="foot-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" class="reticle-sm">
+          <circle cx="24" cy="24" r="17" fill="none" stroke="currentColor" stroke-width="3.5" />
+          <line x1="24" y1="1" x2="24" y2="12" stroke="currentColor" stroke-width="3.5" />
+          <line x1="24" y1="36" x2="24" y2="47" stroke="currentColor" stroke-width="3.5" />
+          <line x1="1" y1="24" x2="12" y2="24" stroke="currentColor" stroke-width="3.5" />
+          <line x1="36" y1="24" x2="47" y2="24" stroke="currentColor" stroke-width="3.5" />
+          <circle cx="24" cy="24" r="4.5" fill="currentColor" />
+        </svg>
+      </div>
+      <p class="foot-line">tokenhunt.dev — local-first secret scanning. the transcript is the leak surface.</p>
+      <img src="/n-sticker.png" alt="N sticker" class="foot-n" width="480" height="381" loading="lazy" />
+      <nav class="foot-links">
+        <a href="https://github.com/JordanNewell/token-hunt">github</a>
+        <a href="mailto:info@tokenhunt.dev">info@tokenhunt.dev</a>
+      </nav>
+    </footer>
+
+    <style>
+      :root {
+        --bg: #0C0D10;
+        --surface: #121317;
+        --border: #1F2126;
+        --text: #F4F3EF;
+        --muted: #8A8F98;
+        --accent: #FF5A1F;
+        --alert: #E5484D;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 1rem;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      ::selection { background: var(--accent); color: var(--bg); }
+      :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+      ::-webkit-scrollbar { width: 10px; }
+      ::-webkit-scrollbar-track { background: var(--bg); }
+      ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 5px; }
+      ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+      .container {
+        max-width: 68rem;
+        margin-inline: auto;
+        padding-inline: clamp(1.25rem, 4vw, 2rem);
+      }
+      h2 {
+        font-size: clamp(1.4rem, 3vw, 1.9rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.25;
+        text-wrap: balance;
+        margin-bottom: 2rem;
+      }
+      .sec-num {
+        color: var(--accent);
+        font-weight: 500;
+        font-size: 0.8em;
+        margin-right: 0.75rem;
+      }
+      code {
+        font-family: inherit;
+        font-size: 0.92em;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.1em 0.35em;
+      }
+      a { color: inherit; }
+
+      /* ---- hero ---- */
+      .hero { padding-block: clamp(6rem, 14vh, 9rem) clamp(5rem, 12vh, 8rem); position: relative; }
+      .frame { position: absolute; inset: clamp(2.5rem, 7vh, 4.5rem) 0; pointer-events: none; }
+      .frame .c { position: absolute; width: 2.5rem; height: 2.5rem; border: 0 solid var(--accent); }
+      .frame .tl { top: 0; left: clamp(1.25rem, 4vw, 2rem); border-top-width: 2px; border-left-width: 2px; }
+      .frame .tr { top: 0; right: clamp(1.25rem, 4vw, 2rem); border-top-width: 2px; border-right-width: 2px; }
+      .frame .bl { bottom: 0; left: clamp(1.25rem, 4vw, 2rem); border-bottom-width: 2px; border-left-width: 2px; }
+      .frame .br { bottom: 0; right: clamp(1.25rem, 4vw, 2rem); border-bottom-width: 2px; border-right-width: 2px; }
+
+      .site-mark {
+        position: absolute;
+        top: calc(clamp(2.5rem, 7vh, 4.5rem) + 1.25rem);
+        right: calc(clamp(1.25rem, 4vw, 2rem) + 1.25rem);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.6rem;
+        text-decoration: none;
+      }
+      .site-mark svg { width: 44px; height: 44px; color: var(--accent); }
+      .site-mark .cl {
+        font-size: 0.72rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+      }
+      .site-mark:hover .cl { color: var(--accent); }
+      @media (max-width: 640px) {
+        .site-mark svg { width: 32px; height: 32px; }
+        .site-mark .cl { font-size: 0.62rem; }
+      }
+
+      .kicker {
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin-bottom: 2.5rem;
+      }
+      .wordmark {
+        font-size: clamp(3rem, 9vw, 6rem);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        margin-left: -0.05em;
+      }
+      .reticle {
+        display: inline-block;
+        width: 1ch;
+        height: 1ch;
+        color: var(--accent);
+        margin: 0 0.02em;
+        vertical-align: -0.06em;
+      }
+      .tagline {
+        font-size: clamp(1.3rem, 3vw, 1.75rem);
+        font-weight: 500;
+        letter-spacing: -0.02em;
+        margin-top: 1.75rem;
+        max-width: 34ch;
+      }
+      .tagline em { font-style: normal; color: var(--accent); }
+      .lede { color: var(--muted); max-width: 52ch; margin-top: 1.25rem; }
+      .install {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-top: 2.5rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--accent);
+        border-radius: 4px;
+        padding: 1rem 1.25rem;
+      }
+      .install .prompt { color: var(--accent); user-select: none; }
+      .install code { background: none; border: none; padding: 0; font-weight: 700; font-size: 1rem; }
+      .install .hint { color: var(--muted); font-size: 0.8rem; }
+
+      /* ---- why ---- */
+      .why {
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+        gap: clamp(2rem, 6vw, 4.5rem);
+        padding-block: clamp(4rem, 10vh, 7rem);
+        border-top: 1px solid var(--border);
+        align-items: center;
+      }
+      .col-head p { color: var(--muted); margin-top: 1.25rem; max-width: 40ch; }
+      .term {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .term-bar {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.6rem 0.9rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .dot { width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--border); }
+      .term-title { color: var(--muted); font-size: 0.75rem; margin-left: 0.5rem; }
+      .term pre {
+        padding: 1.25rem 1.5rem;
+        font-size: 0.85rem;
+        line-height: 1.7;
+        overflow-x: auto;
+      }
+      .t-dim { color: var(--muted); }
+      .t-accent { color: var(--accent); font-weight: 700; }
+      .t-red { color: var(--alert); font-weight: 700; }
+
+      /* ---- hooks ---- */
+      .hooks { padding-block: clamp(4rem, 10vh, 7rem); border-top: 1px solid var(--border); }
+      .hooks table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+      .hooks th {
+        text-align: left;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 0.7rem;
+        font-weight: 500;
+        padding: 0.75rem 1rem 0.75rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .hooks td { padding: 0.9rem 1rem 0.9rem 0; border-bottom: 1px solid var(--border); vertical-align: baseline; }
+      .hooks td code { background: none; border: none; padding: 0; }
+      .dim { color: var(--muted); }
+      .sev {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        padding: 0.2rem 0.55rem;
+        border-radius: 4px;
+        white-space: nowrap;
+      }
+      .sev-block { background: var(--alert); color: var(--bg); }
+      .sev-warn { background: none; color: var(--accent); border: 1px solid var(--accent); }
+
+      /* ---- escape ---- */
+      .escape { padding-block: clamp(4rem, 10vh, 7rem); border-top: 1px solid var(--border); }
+      .escape-lede { color: var(--muted); max-width: 56ch; margin: -1rem 0 2.5rem; }
+      .escape-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.25rem;
+      }
+      .escape-col pre {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 1.1rem 1.1rem;
+        font-size: 0.78rem;
+        line-height: 1.7;
+        overflow-x: auto;
+        min-height: 5.2rem;
+      }
+      .escape-col.ok pre { border-left: 3px solid var(--accent); }
+      .escape-tag { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+      .escape-tag.blocked { color: var(--alert); }
+      .escape-tag.allowed { color: var(--accent); }
+      .escape-why { color: var(--muted); font-size: 0.78rem; margin-top: 0.6rem; }
+
+      /* ---- tiers ---- */
+      .tiers { padding-block: clamp(4rem, 10vh, 7rem); border-top: 1px solid var(--border); }
+      .tier {
+        display: grid;
+        grid-template-columns: 4rem minmax(0, 1fr) 3rem;
+        gap: 1.5rem;
+        align-items: start;
+        padding-block: 2rem;
+        border-bottom: 1px solid var(--border);
+        text-decoration: none;
+        transition: background 150ms ease;
+      }
+      .tier:first-of-type { border-top: 1px solid var(--border); }
+      .tier:hover { background: var(--surface); }
+      .tier-n { color: var(--accent); font-weight: 500; padding-top: 0.2rem; }
+      .tier-name { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em; }
+      .tier-tag {
+        color: var(--muted);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-left: 1rem;
+      }
+      .tier-desc { display: block; color: var(--muted); max-width: 62ch; margin-top: 0.5rem; }
+      .tier-cta { color: var(--accent); font-size: 1.3rem; justify-self: end; padding-top: 0.2rem; }
+
+      /* ---- providers ---- */
+      .providers { padding-block: 3.5rem 5rem; border-top: 1px solid var(--border); }
+      .providers-label {
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.72rem;
+        margin-bottom: 1.25rem;
+      }
+      .providers ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.6rem 1.75rem; }
+      .providers li { font-size: 0.85rem; font-weight: 500; }
+      .providers li::before { content: '·'; color: var(--accent); margin-right: 0.5rem; }
+
+      /* ---- footer ---- */
+      .footer {
+        padding-block: 3.5rem 4rem;
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+      .reticle-sm { width: 1.6rem; height: 1.6rem; color: var(--accent); vertical-align: middle; }
+      .foot-n { height: 56px; width: auto; align-self: center; }
+      .foot-line { color: var(--muted); font-size: 0.82rem; max-width: 48ch; }
+      .foot-links { display: flex; gap: 1.75rem; font-size: 0.85rem; }
+      .foot-links a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
+      .foot-links a:hover { color: var(--accent); }
+
+      /* ---- motion ---- */
+      .reveal { opacity: 0; transform: translateY(12px); animation: rise 380ms cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+      .reveal:nth-child(2) { animation-delay: 60ms; }
+      .reveal:nth-child(3) { animation-delay: 120ms; }
+      .reveal:nth-child(4) { animation-delay: 180ms; }
+      .reveal:nth-child(5) { animation-delay: 240ms; }
+      @keyframes rise { to { opacity: 1; transform: none; } }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal { animation: none; opacity: 1; transform: none; }
+        html { scroll-behavior: auto; }
+      }
+
+      /* ---- responsive ---- */
+      @media (max-width: 56rem) {
+        .why { grid-template-columns: 1fr; }
+        .escape-grid { grid-template-columns: 1fr; }
+        .tier { grid-template-columns: 2.5rem minmax(0, 1fr); }
+        .tier-cta { display: none; }
+        .hooks td:nth-child(2), .hooks th:nth-child(2) { display: none; }
+        .foot-links { margin-left: 0; }
+        .footer { justify-content: flex-start; }
+      }
+    </style>
+  </body>
+</html>
