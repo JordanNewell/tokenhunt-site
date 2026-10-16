@@ -286,7 +286,7 @@ const tiers = [
       a { color: inherit; }
 
       /* ---- hero ---- */
-      .hero { padding-block: clamp(8rem, 19vh, 12rem) clamp(5rem, 12vh, 8rem); position: relative; }
+      .hero { padding-block: calc(clamp(8rem, 19vh, 12rem) + 23px) clamp(5rem, 12vh, 8rem); position: relative; }
       .frame { position: absolute; inset: clamp(2.5rem, 7vh, 4.5rem) 0; pointer-events: none; }
       .frame .c { position: absolute; width: 2.5rem; height: 2.5rem; border: 0 solid var(--accent); }
       .frame .tl { top: 0; left: clamp(1.25rem, 4vw, 2rem); border-top-width: 2px; border-left-width: 2px; }
@@ -296,14 +296,15 @@ const tiers = [
 
       .site-nav {
         position: absolute;
-        top: 2.25rem;
-        right: clamp(1.5rem, 3.5vw, 3.5rem);
+        top: 40px;
+        right: clamp(1.5rem, 3.2vw, 3.5rem);
         z-index: 10;
       }
       .site-mark { display: block; text-decoration: none; }
-      .site-mark svg { width: 72px; height: 72px; color: var(--accent); display: block; }
+      .site-mark svg { width: 120px; height: 120px; color: var(--accent); display: block; }
       @media (max-width: 640px) {
-        .site-mark svg { width: 44px; height: 44px; }
+        .site-nav { top: 1.5rem; }
+        .site-mark svg { width: 56px; height: 56px; }
       }
 
       .kicker {

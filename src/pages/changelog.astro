@@ -110,7 +110,7 @@ const releases = [
         font-size: 0.95rem;
         line-height: 1.65;
         -webkit-font-smoothing: antialiased;
-        padding-block: 4rem 6rem;
+        padding-block: calc(4rem + 23px) 6rem;
       }
       ::selection { background: var(--accent); color: var(--bg); }
       :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
@@ -126,15 +126,19 @@ const releases = [
 
       .site-mark {
         position: absolute;
-        top: 2rem;
-        right: clamp(1.25rem, 4vw, 2rem);
+        top: 40px;
+        right: clamp(1.5rem, 3.2vw, 3.5rem);
         display: flex;
         flex-direction: column;
         align-items: flex-end;
         gap: 0.6rem;
         text-decoration: none;
       }
-      .site-mark svg { width: 36px; height: 36px; color: var(--accent); }
+      .site-mark svg { width: 120px; height: 120px; color: var(--accent); }
+      @media (max-width: 640px) {
+        .site-mark { top: 1.5rem; }
+        .site-mark svg { width: 56px; height: 56px; }
+      }
       .site-mark .cl {
         font-size: 0.68rem;
         font-weight: 500;
