@@ -201,7 +201,7 @@ const tiers = [
       <section class="providers container">
         <p class="providers-label">48 rules · {providers.length} providers built in</p>
         <ul>
-          {providers.map((p) => <li>{p}</li>)}
+          {[...providers].sort((a, b) => a.localeCompare(b)).map((p) => <li>{p}</li>)}
         </ul>
       </section>
     </main>
