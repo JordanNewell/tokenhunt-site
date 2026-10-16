@@ -13,11 +13,24 @@ const hooks = [
   { hook: 'PostToolUse:Edit/Write', sees: 'echo', action: 'WARN + log', level: 'warn' },
 ];
 
+const providers = [
+  // dev/infra
+  'Z.ai', 'Anthropic', 'OpenAI', 'GitHub', 'GitLab', 'Figma', 'PyPI', 'npm', 'Linear', 'Stripe', 'Slack',
+  // llm inference — dedicated rules
+  'OpenRouter', 'Groq', 'Together AI', 'Fireworks', 'Mistral', 'xAI', 'Perplexity', 'Hugging Face',
+  'Cerebras', 'Replicate', 'Vercel AI Gateway', 'NVIDIA NIM', 'Chutes', 'Requesty', 'Novita', 'Upstage',
+  'Baseten', 'Baidu Qianfan', 'fal.ai', 'DashScope', 'Moonshot Kimi', 'Cohere', 'Scaleway',
+  'SambaNova', 'Nebius', 'AI21', 'OVHcloud', 'FriendliAI', 'GMI Cloud', 'Crusoe', 'Featherless',
+  'DeepInfra', 'Inference.net', 'BytePlus',
+  // caught via generic fallback shapes
+  'DeepSeek', 'StepFun', 'SiliconFlow', 'Poe', 'Qwen', 'MiniMax',
+];
+
 const tiers = [
   {
     n: '01',
     name: 'token-hunt',
-    tag: 'free · MIT',
+    tag: 'free · BUSL-1.1',
     desc: 'The engine. CLI (scan / list / close / watch), six hooks with block-and-rotate behavior, the allowlist, and the bash escape-hatch runtime detector no regex can see.',
     cta: 'github.com/JordanNewell/token-hunt',
     href: 'https://github.com/JordanNewell/token-hunt',
@@ -25,7 +38,7 @@ const tiers = [
   {
     n: '02',
     name: 'pat-scanner',
-    tag: 'free · MIT',
+    tag: 'free · BUSL-1.1',
     desc: 'The one-command plugin. One hook, 13 credential classes, regex matching. Install it and you\'re covered. The guard, without the workflow.',
     cta: 'github.com/JordanNewell/pat-scanner',
     href: 'https://github.com/JordanNewell/pat-scanner',
@@ -88,9 +101,15 @@ const tiers = [
         transcript for 30 minutes — indexed, synced, maybe re-emitted by a later tool call.
         token-hunt fires while it's happening.
       </p>
-      <div class="install reveal" role="group" aria-label="install command">
-        <span class="prompt">$</span><code>pip install token-hunt</code>
-        <span class="hint"># zero cloud · zero telemetry · fail-closed</span>
+      <div class="install reveal" role="group" aria-label="install commands">
+        <div class="install-row">
+          <span class="prompt">$</span><code>pip install token-hunt</code>
+          <span class="hint"># v0.1.0 · zero cloud · fail-closed</span>
+        </div>
+        <div class="install-row">
+          <span class="prompt">$</span><code>claude plugin install token-hunt@JordanNewell</code>
+          <span class="hint"># the six-hook guard</span>
+        </div>
       </div>
     </header>
 
@@ -180,11 +199,9 @@ const tiers = [
 
       <!-- ============ providers ============ -->
       <section class="providers container">
-        <p class="providers-label">11 providers built in</p>
+        <p class="providers-label">48 rules · {providers.length} providers built in</p>
         <ul>
-          <li>Z.ai</li><li>Anthropic</li><li>GitHub</li><li>GitLab</li><li>Figma</li>
-          <li>PyPI</li><li>npm</li><li>Linear</li><li>Stripe</li><li>OpenAI</li>
-          <li>Slack</li>
+          {providers.map((p) => <li>{p}</li>)}
         </ul>
       </section>
     </main>
@@ -332,9 +349,8 @@ const tiers = [
       .lede { color: var(--muted); max-width: 52ch; margin-top: 1.25rem; }
       .install {
         display: inline-flex;
-        align-items: baseline;
-        gap: 0.75rem;
-        flex-wrap: wrap;
+        flex-direction: column;
+        gap: 0.5rem;
         margin-top: 2.5rem;
         background: var(--surface);
         border: 1px solid var(--border);
@@ -342,6 +358,7 @@ const tiers = [
         border-radius: 4px;
         padding: 1rem 1.25rem;
       }
+      .install-row { display: flex; align-items: baseline; gap: 0.75rem; flex-wrap: wrap; }
       .install .prompt { color: var(--accent); user-select: none; }
       .install code { background: none; border: none; padding: 0; font-weight: 700; font-size: 1rem; }
       .install .hint { color: var(--muted); font-size: 0.8rem; }

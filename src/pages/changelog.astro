@@ -8,13 +8,7 @@ const releases = [
   {
     v: 'unreleased',
     date: null,
-    items: [
-      'Provider coverage expanded <strong>12 → 37 rules</strong> for LLM-inference parity: OpenRouter, Groq, Together, Fireworks, xAI, Perplexity, Hugging Face, Cerebras, Replicate, Vercel AI Gateway, NVIDIA NIM, Chutes, Requesty, Novita, Upstage, Baseten, Baidu Qianfan, fal.ai, DashScope, Moonshot Kimi, Mistral, Cohere, Scaleway.',
-      'Generic fallback rules: unattributed <code>sk-</code> 32-char key shape and generic JWT.',
-      'OpenAI rule tightened to the <code>T3BlbkFJ</code> marker — no longer double-fires with the generic <code>sk-</code> rule.',
-      'Prefixless and generic-prefix shapes are keyword-gated: the provider name must appear in the scanned text before the regex is tried.',
-      'Providers with no publicly documented key format get keyword-gated opaque rules — attribution + rotation URL, not shape confidence. No guessed regexes, ever.',
-    ],
+    items: [],
     next: [
       'Silent redaction via <code>updatedToolOutput</code> for PostToolUse hooks — the agent never sees the raw value.',
       'Active verification mode — "is this key actually live?"',
@@ -23,10 +17,13 @@ const releases = [
   },
   {
     v: '0.1.0',
-    date: '2026-07-27',
+    date: '2026-10-15',
     items: [
-      'Initial release.',
-      'Detection core: regex patterns (12 built-in providers), bash escape-hatch detector, entropy candidates.',
+      'Initial release — live on <a href="https://pypi.org/project/token-hunt/">PyPI</a> and the Claude Code plugin marketplace.',
+      'Detection core: <strong>48 regex rules</strong> covering 51 providers, bash escape-hatch detector, entropy candidates.',
+      'Provider coverage: 11 dev/infra (Z.ai, Anthropic, OpenAI, GitHub, GitLab, Figma, PyPI, npm, Linear, Stripe, Slack) + 34 LLM inference providers (OpenRouter, Groq, Together, Fireworks, xAI, Perplexity, Hugging Face, Cerebras, Replicate, Vercel AI Gateway, NVIDIA NIM, Chutes, Requesty, Novita, Upstage, Baseten, Baidu Qianfan, fal.ai, DashScope, Moonshot Kimi, Mistral, Cohere, Scaleway, SambaNova, Nebius, AI21, OVHcloud, FriendliAI, GMI Cloud, Crusoe, Featherless, DeepInfra, Inference.net, BytePlus) + generic fallbacks for bare-<code>sk-</code> (DeepSeek, StepFun, SiliconFlow, Poe, Qwen) and JWT shapes (MiniMax).',
+      'Providers with no publicly documented key format get keyword-gated opaque rules — attribution + rotation URL, not shape confidence. No guessed regexes, ever.',
+      'OpenAI rule tightened to the <code>T3BlbkFJ</code> marker — no double-fire with the generic <code>sk-</code> rule.',
       'Claude Code plugin with 6 hook scripts covering 8 detection rows.',
       'CLI peer with <code>scan</code>, <code>list</code>, <code>close</code>, <code>watch</code> commands.',
       'Pattern layering: builtin → <code>~/.token-hunt/patterns.local.toml</code> → <code>./.token-hunt/patterns.local.toml</code>.',
