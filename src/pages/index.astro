@@ -73,17 +73,22 @@ const tiers = [
       <div class="frame" aria-hidden="true">
         <i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i>
       </div>
-      <a class="site-mark reveal" href="/changelog">
-        <svg viewBox="0 0 48 48" role="img" aria-label="tokenhunt mark">
-          <circle cx="24" cy="24" r="17" fill="none" stroke="currentColor" stroke-width="3.5" />
-          <line x1="24" y1="1" x2="24" y2="12" stroke="currentColor" stroke-width="3.5" />
-          <line x1="24" y1="36" x2="24" y2="47" stroke="currentColor" stroke-width="3.5" />
-          <line x1="1" y1="24" x2="12" y2="24" stroke="currentColor" stroke-width="3.5" />
-          <line x1="36" y1="24" x2="47" y2="24" stroke="currentColor" stroke-width="3.5" />
-          <circle cx="24" cy="24" r="4.5" fill="currentColor" />
-        </svg>
-        <span class="cl">changelog</span>
-      </a>
+      <div class="site-nav reveal">
+        <a class="site-mark" href="/docs">
+          <svg viewBox="0 0 48 48" role="img" aria-label="tokenhunt mark">
+            <circle cx="24" cy="24" r="17" fill="none" stroke="currentColor" stroke-width="3.5" />
+            <line x1="24" y1="1" x2="24" y2="12" stroke="currentColor" stroke-width="3.5" />
+            <line x1="24" y1="36" x2="24" y2="47" stroke="currentColor" stroke-width="3.5" />
+            <line x1="1" y1="24" x2="12" y2="24" stroke="currentColor" stroke-width="3.5" />
+            <line x1="36" y1="24" x2="47" y2="24" stroke="currentColor" stroke-width="3.5" />
+            <circle cx="24" cy="24" r="4.5" fill="currentColor" />
+          </svg>
+          <span class="cl">docs</span>
+        </a>
+        <a class="site-mark site-mark-txt" href="/changelog">
+          <span class="cl">changelog</span>
+        </a>
+      </div>
       <p class="kicker reveal">secret scanning for the agentic era</p>
       <h1 class="reveal wordmark" aria-label="tokenhunt">
         t<svg class="reticle" viewBox="0 0 48 48" role="presentation" aria-hidden="true">
@@ -221,6 +226,8 @@ const tiers = [
       <p class="foot-line">tokenhunt.dev — local-first secret scanning. the transcript is the leak surface.</p>
       <img src="/n-sticker.png" alt="N sticker" class="foot-n" width="480" height="381" loading="lazy" />
       <nav class="foot-links">
+        <a href="/docs">docs</a>
+        <a href="/changelog">changelog</a>
         <a href="https://github.com/JordanNewell/token-hunt">github</a>
         <a href="mailto:info@tokenhunt.dev">info@tokenhunt.dev</a>
       </nav>
@@ -283,7 +290,7 @@ const tiers = [
       a { color: inherit; }
 
       /* ---- hero ---- */
-      .hero { padding-block: clamp(6rem, 14vh, 9rem) clamp(5rem, 12vh, 8rem); position: relative; }
+      .hero { padding-block: clamp(8rem, 19vh, 12rem) clamp(5rem, 12vh, 8rem); position: relative; }
       .frame { position: absolute; inset: clamp(2.5rem, 7vh, 4.5rem) 0; pointer-events: none; }
       .frame .c { position: absolute; width: 2.5rem; height: 2.5rem; border: 0 solid var(--accent); }
       .frame .tl { top: 0; left: clamp(1.25rem, 4vw, 2rem); border-top-width: 2px; border-left-width: 2px; }
@@ -291,17 +298,25 @@ const tiers = [
       .frame .bl { bottom: 0; left: clamp(1.25rem, 4vw, 2rem); border-bottom-width: 2px; border-left-width: 2px; }
       .frame .br { bottom: 0; right: clamp(1.25rem, 4vw, 2rem); border-bottom-width: 2px; border-right-width: 2px; }
 
-      .site-mark {
+      .site-nav {
         position: absolute;
-        top: calc(clamp(2.5rem, 7vh, 4.5rem) + 1.25rem);
-        right: calc(clamp(1.25rem, 4vw, 2rem) + 1.25rem);
+        top: 2rem;
+        right: clamp(1.25rem, 4vw, 2rem);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 1.1rem;
+      }
+      .site-mark {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
         gap: 0.6rem;
         text-decoration: none;
       }
-      .site-mark svg { width: 44px; height: 44px; color: var(--accent); }
+      .site-mark-txt .cl { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 500; }
+      .site-mark-txt:hover .cl { color: var(--accent); }
+      .site-mark svg { width: 64px; height: 64px; color: var(--accent); }
       .site-mark .cl {
         font-size: 0.72rem;
         font-weight: 500;
@@ -311,7 +326,7 @@ const tiers = [
       }
       .site-mark:hover .cl { color: var(--accent); }
       @media (max-width: 640px) {
-        .site-mark svg { width: 32px; height: 32px; }
+        .site-mark svg { width: 40px; height: 40px; }
         .site-mark .cl { font-size: 0.62rem; }
       }
 
