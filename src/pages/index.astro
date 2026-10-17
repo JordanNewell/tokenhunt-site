@@ -66,8 +66,12 @@ const tiers = [
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://tokenhunt.dev/" />
     <meta property="og:image" content="https://tokenhunt.dev/og.png" />
+    <script is:inline>
+      try { if (localStorage.getItem('th-theme') === 'light') document.documentElement.classList.add('light'); } catch {}
+    </script>
   </head>
   <body>
+    <div class="frame" aria-hidden="true"><i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i></div>
     <div class="site-nav reveal">
       <a class="site-mark" href="/">
         <svg viewBox="0 0 48 48" role="img" aria-label="tokenhunt mark">
@@ -79,15 +83,42 @@ const tiers = [
           <circle cx="24" cy="24" r="4.5" fill="currentColor" />
         </svg>
       </a>
+      <nav class="corner-nav" aria-label="site">
+        <a class="bubble" href="/docs">docs</a>
+        <a class="bubble" href="/changelog">changelog</a>
+        <div class="socials">
+          <a class="circ" href="https://x.com/tokenhuntdev" aria-label="TokenHunt on X" title="@tokenhuntdev">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+          </a>
+          <a class="circ" href="/license" aria-label="license — © 2026 Jordan Newell" title="© 2026 Jordan Newell — license">©</a>
+          <a class="circ" href="mailto:info@tokenhunt.dev" aria-label="email info@tokenhunt.dev" title="info@tokenhunt.dev">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="m22 7-10 6L2 7" />
+            </svg>
+          </a>
+        </div>
+      </nav>
     </div>
+    <button class="theme-toggle" type="button" aria-label="toggle day/night theme">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="5" />
+        <line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      </svg>
+    </button>
     <!-- ============ hero ============ -->
     <header class="hero container">
-      <div class="frame" aria-hidden="true">
-        <i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i>
-      </div>
       <p class="kicker reveal">secret scanning for the agentic era</p>
-      <h1 class="reveal wordmark" aria-label="tokenhunt">
-        t<svg class="reticle" viewBox="0 0 48 48" role="presentation" aria-hidden="true">
+      <h1 class="reveal wordmark">
+        t<span class="sr-only">o</span><svg class="reticle" viewBox="0 0 48 48" role="presentation" aria-hidden="true">
           <circle cx="24" cy="24" r="17" fill="none" stroke="currentColor" stroke-width="3.5" />
           <line x1="24" y1="1"  x2="24" y2="12" stroke="currentColor" stroke-width="3.5" />
           <line x1="24" y1="36" x2="24" y2="47" stroke="currentColor" stroke-width="3.5" />
@@ -221,12 +252,6 @@ const tiers = [
       </div>
       <p class="foot-line">tokenhunt.dev — local-first secret scanning. the transcript is the leak surface.</p>
       <img src="/n-sticker.png" alt="N sticker" class="foot-n" width="480" height="381" loading="lazy" />
-      <nav class="foot-links">
-        <a href="/docs">docs</a>
-        <a href="/changelog">changelog</a>
-        <a href="https://github.com/JordanNewell/token-hunt">github</a>
-        <a href="mailto:info@tokenhunt.dev">info@tokenhunt.dev</a>
-      </nav>
     </footer>
 
     <style>
@@ -238,6 +263,13 @@ const tiers = [
         --muted: #8A8F98;
         --accent: #FF5A1F;
         --alert: #E5484D;
+      }
+      :root.light {
+        --bg: #F7F6F2;
+        --surface: #FFFFFF;
+        --border: #E3E1DB;
+        --text: #15171C;
+        --muted: #686D76;
       }
       * { box-sizing: border-box; margin: 0; padding: 0; }
       html { scroll-behavior: smooth; }
@@ -286,25 +318,75 @@ const tiers = [
       a { color: inherit; }
 
       /* ---- hero ---- */
-      .hero { padding-block: calc(clamp(8rem, 19vh, 12rem) + 23px) clamp(5rem, 12vh, 8rem); position: relative; }
-      .frame { position: absolute; inset: clamp(2.5rem, 7vh, 4.5rem) 0; pointer-events: none; }
-      .frame .c { position: absolute; width: 2.5rem; height: 2.5rem; border: 0 solid var(--accent); }
-      .frame .tl { top: 0; left: clamp(1.25rem, 4vw, 2rem); border-top-width: 2px; border-left-width: 2px; }
-      .frame .tr { top: 0; right: clamp(1.25rem, 4vw, 2rem); border-top-width: 2px; border-right-width: 2px; }
-      .frame .bl { bottom: 0; left: clamp(1.25rem, 4vw, 2rem); border-bottom-width: 2px; border-left-width: 2px; }
-      .frame .br { bottom: 0; right: clamp(1.25rem, 4vw, 2rem); border-bottom-width: 2px; border-right-width: 2px; }
+      .hero { padding-block: clamp(13.5rem, 24vh, 16rem) clamp(5rem, 12vh, 8rem); position: relative; }
 
       .site-nav {
         position: absolute;
         top: 40px;
         right: clamp(1.5rem, 3.2vw, 3.5rem);
         z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
       .site-mark { display: block; text-decoration: none; }
-      .site-mark svg { width: 120px; height: 120px; color: var(--accent); display: block; }
+      .site-mark svg { width: 76px; height: 76px; color: var(--accent); display: block; }
+
+      /* ---- corner nav: stacked symmetrically under the logo ---- */
+      .corner-nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.55rem;
+        margin-top: 1.4rem;
+      }
+
+      /* ---- frame: corner brackets starting at the content-start line ---- */
+      .frame {
+        position: fixed;
+        inset: calc(clamp(13.5rem, 24vh, 16rem) + 12px) clamp(0.75rem, 1.5vw, 1.25rem) 1.5rem;
+        pointer-events: none;
+        z-index: 5;
+      }
+      .frame i { position: absolute; width: 22px; height: 22px; border: 0 solid var(--accent); }
+      .frame .tl { top: 0; left: 0; border-top-width: 2px; border-left-width: 2px; }
+      .frame .tr { top: 0; right: 0; border-top-width: 2px; border-right-width: 2px; }
+      .frame .bl { bottom: 0; left: 0; border-bottom-width: 2px; border-left-width: 2px; }
+      .frame .br { bottom: 0; right: 0; border-bottom-width: 2px; border-right-width: 2px; }
+      @media (max-width: 640px) {
+        .frame { inset: calc(clamp(14.5rem, 28vh, 16rem) + 12px) 1rem 1rem; }
+        .frame i { width: 16px; height: 16px; }
+      }
+
+      /* ---- theme toggle ---- */
+      .theme-toggle {
+        position: absolute;
+        top: 40px;
+        left: clamp(1.5rem, 3.2vw, 3.5rem);
+        z-index: 10;
+        width: 44px;
+        height: 44px;
+        display: grid;
+        place-items: center;
+        background: none;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--muted);
+        cursor: pointer;
+      }
+      .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+      .theme-toggle svg { width: 20px; height: 20px; }
+      .theme-toggle .sun { display: none; }
+      :root.light .theme-toggle .moon { display: none; }
+      :root.light .theme-toggle .sun { display: block; }
       @media (max-width: 640px) {
         .site-nav { top: 1.5rem; }
-        .site-mark svg { width: 56px; height: 56px; }
+        .site-mark svg { width: 48px; height: 48px; }
+        .corner-nav { margin-top: 1rem; }
+        .theme-toggle { top: 1.5rem; }
+        .hero { padding-block: clamp(14.5rem, 28vh, 16rem) clamp(4rem, 10vh, 6rem); }
+        .kicker { margin-top: 2rem; }
+        .foot-n { height: 24px; }
       }
 
       .kicker {
@@ -321,6 +403,17 @@ const tiers = [
         letter-spacing: -0.04em;
         line-height: 1;
         margin-left: -0.05em;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
       }
       .reticle {
         display: inline-block;
@@ -492,17 +585,40 @@ const tiers = [
         padding-block: 3.5rem 4rem;
         border-top: 1px solid var(--border);
         display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 2rem;
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1.5rem;
       }
       .reticle-sm { width: 1.6rem; height: 1.6rem; color: var(--accent); vertical-align: middle; }
-      .foot-n { height: 56px; width: auto; align-self: center; }
+      .foot-n { height: 28px; width: auto; }
       .foot-line { color: var(--muted); font-size: 0.82rem; max-width: 48ch; }
-      .foot-links { display: flex; gap: 1.75rem; font-size: 0.85rem; }
-      .foot-links a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
-      .foot-links a:hover { color: var(--accent); }
+
+      /* ---- bubbles + socials ---- */
+      .bubble {
+        display: inline-block;
+        padding: 0.28rem 0.85rem;
+        border: 1px solid var(--border);
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        color: var(--text);
+        text-decoration: none;
+      }
+      .bubble:hover { border-color: var(--accent); color: var(--accent); }
+      .socials { display: flex; gap: 0.45rem; }
+      .circ {
+        width: 30px;
+        height: 30px;
+        border: 1px solid var(--border);
+        border-radius: 9999px;
+        display: grid;
+        place-items: center;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.78rem;
+      }
+      a.circ:hover { color: var(--accent); border-color: var(--accent); }
+      .circ svg { width: 12px; height: 12px; }
 
       /* ---- motion ---- */
       .reveal { opacity: 0; transform: translateY(12px); animation: rise 380ms cubic-bezier(0.16, 1, 0.3, 1) forwards; }
@@ -523,9 +639,13 @@ const tiers = [
         .tier { grid-template-columns: 2.5rem minmax(0, 1fr); }
         .tier-cta { display: none; }
         .hooks td:nth-child(2), .hooks th:nth-child(2) { display: none; }
-        .foot-links { margin-left: 0; }
-        .footer { justify-content: flex-start; }
       }
     </style>
+    <script is:inline>
+      document.querySelector('.theme-toggle').addEventListener('click', () => {
+        const light = document.documentElement.classList.toggle('light');
+        try { localStorage.setItem('th-theme', light ? 'light' : 'dark'); } catch {}
+      });
+    </script>
   </body>
 </html>
