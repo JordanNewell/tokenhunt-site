@@ -251,7 +251,7 @@ const tiers = [
         </svg>
       </div>
       <p class="foot-line">tokenhunt.dev — local-first secret scanning. the transcript is the leak surface.</p>
-      <img src="/n-sticker.png" alt="N sticker" class="foot-n" width="480" height="381" loading="lazy" />
+      <a href="https://jordannewell.com" rel="noopener"><img src="/n-logo.png" alt="N" class="foot-n" loading="lazy" /></a>
     </footer>
 
     <style>
@@ -280,6 +280,9 @@ const tiers = [
         font-size: 1rem;
         line-height: 1.6;
         -webkit-font-smoothing: antialiased;
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
       }
       ::selection { background: var(--accent); color: var(--bg); }
       :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
@@ -582,6 +585,7 @@ const tiers = [
 
       /* ---- footer ---- */
       .footer {
+        margin-top: auto;
         padding-block: 3.5rem 4rem;
         border-top: 1px solid var(--border);
         display: flex;
@@ -591,7 +595,8 @@ const tiers = [
         gap: 1.5rem;
       }
       .reticle-sm { width: 1.6rem; height: 1.6rem; color: var(--accent); vertical-align: middle; }
-      .foot-n { height: 28px; width: auto; }
+      .foot-n { display: block; height: 28px; width: auto; opacity: 0.9; }
+      .footer a:hover .foot-n { opacity: 1; }
       .foot-line { color: var(--muted); font-size: 0.82rem; max-width: 48ch; }
 
       /* ---- bubbles + socials ---- */
