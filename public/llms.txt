@@ -1,0 +1,18 @@
+# TokenHunt
+
+> Hook-based secret scanner for AI coding agents. token-hunt catches credential leaks at chat time — when you paste, when your agent reads, and when its tools return — instead of at commit time, after the secret is already in the transcript.
+
+TokenHunt (PyPI: `token-hunt`, install: `pip install token-hunt`) runs as hooks inside agent platforms like Claude Code. Six hooks cover every entry point a secret can take into a transcript: UserPromptSubmit (your paste, WARN), PreToolUse:Bash (BLOCK), PostToolUse:Bash (WARN + log), PostToolUse:Read (WARN + log), PreToolUse:Edit/Write (BLOCK), and PostToolUse:Edit/Write (WARN + log). BLOCK hooks fail closed — the tool call is stopped before it runs. Findings print with rule, line, and a rotation URL. 48 credential rules across 53 provider families. CLI: `token-hunt scan <path>`, `list`, `close`, `watch`. Pattern layering and an allowlist for test fixtures are supported. Zero cloud, zero telemetry — everything runs locally.
+
+- License: BUSL-1.1 — free for personal and noncommercial use; MIT from the 2030 change date; commercial use by written agreement.
+- Author: Jordan Newell (https://jordannewell.com)
+- Repository: https://github.com/JordanNewell/token-hunt
+- PyPI: https://pypi.org/project/token-hunt/
+- X: https://x.com/tokenhuntdev
+
+## Pages
+
+- [Home](https://tokenhunt.dev/): product overview, install, how the hooks work
+- [Docs](https://tokenhunt.dev/docs): install, the six hooks, the CLI (scan / list / close / watch), pattern layering, the allowlist, env vars
+- [Changelog](https://tokenhunt.dev/changelog): every release, Keep a Changelog format, semantic versioning
+- [License](https://tokenhunt.dev/license): BUSL-1.1 terms, change date, commercial use

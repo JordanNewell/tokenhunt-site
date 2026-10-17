@@ -1,0 +1,45 @@
+---
+// Shared SEO/AI-discovery head block. Every page passes its canonical title,
+// description, url, and optional JSON-LD objects.
+interface Props {
+  title: string;
+  description: string;
+  url: string;
+  jsonLd?: object[];
+}
+const { title, description, url, jsonLd = [] } = Astro.props;
+const image = "https://tokenhunt.dev/og.png";
+---
+
+<!-- canonical + indexing -->
+<link rel="canonical" href={url} />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<meta name="author" content="Jordan Newell" />
+
+<!-- Open Graph -->
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={url} />
+<meta property="og:site_name" content="TokenHunt" />
+<meta property="og:image" content={image} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="TokenHunt — catch secrets at chat time, not commit time" />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter/X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@tokenhuntdev" />
+<meta name="twitter:creator" content="@tokenhuntdev" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
+
+<!-- discovery files + theme -->
+<link rel="sitemap" href="/sitemap.xml" />
+<link rel="llms" href="/llms.txt" />
+<meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#F7F6F2" media="(prefers-color-scheme: light)" />
+
+{jsonLd.map((schema) => <script type="application/ld+json" set:html={JSON.stringify(schema)} />)}

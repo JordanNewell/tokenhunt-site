@@ -52,6 +52,83 @@ const tiers = [
     href: 'mailto:info@tokenhunt.dev?subject=token-hunt-pro%20waitlist',
   },
 ];
+import Seo from "../components/Seo.astro";
+
+const appSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "token-hunt",
+  "alternateName": "TokenHunt",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Linux, macOS, Windows",
+  "description": "Hook-based secret scanner for AI coding agents. token-hunt catches leaks when you paste, when your agent reads, and when its tools return — not at commit time. 48 credential rules across 53 provider families, fail-closed BLOCK hooks, zero cloud, zero telemetry.",
+  "url": "https://tokenhunt.dev/",
+  "downloadUrl": "https://pypi.org/project/token-hunt/",
+  "installUrl": "https://tokenhunt.dev/docs",
+  "codeRepository": "https://github.com/JordanNewell/token-hunt",
+  "softwareVersion": "0.1.0",
+  "datePublished": "2026-10-15",
+  "license": "https://tokenhunt.dev/license",
+  "isAccessibleForFree": true,
+  "author": { "@type": "Person", "name": "Jordan Newell", "url": "https://jordannewell.com" },
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "keywords": "secret scanning, secrets detection, AI coding agents, Claude Code, credential leak, API key rotation, developer security, hooks, pre-tool-use, gitleaks alternative",
+  "featureList": [
+    "Six hooks covering every entry point for secrets into an agent transcript",
+    "BLOCK hooks stop the tool call before it runs (PreToolUse:Bash, PreToolUse:Edit/Write)",
+    "WARN hooks catch pastes, command output, file reads, and write echoes",
+    "48 credential rules across 53 provider families",
+    "CLI: token-hunt scan / list / close / watch",
+    "Findings include rule, line, and a rotate URL",
+    "Allowlist for test fixtures and known-safe strings",
+    "Zero cloud, zero telemetry — everything runs locally"
+  ]
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is TokenHunt?",
+      "acceptedAnswer": { "@type": "Answer", "text": "TokenHunt (pip: token-hunt) is a hook-based secret scanner for AI coding agents such as Claude Code. It inspects what you paste, what commands run, what files your agent reads and writes, and blocks tool calls that would leak credentials — 48 rules across 53 provider families." }
+    },
+    {
+      "@type": "Question",
+      "name": "How is token-hunt different from gitleaks or truffleHog?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Commit-time scanners see the leak after it is already in your transcript or repo. token-hunt runs as agent hooks at chat time — it stops the secret before the tool call executes, fail-closed, and points you at a rotation URL for anything that slipped through." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does token-hunt work with Claude Code?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes — installing the plugin wires all six hooks (UserPromptSubmit, PreToolUse:Bash, PostToolUse:Bash, PostToolUse:Read, PreToolUse:Edit/Write, PostToolUse:Edit/Write) into Claude Code in one step." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does token-hunt send my code to the cloud?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. Scanning runs entirely on your machine — zero cloud, zero telemetry." }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does token-hunt cost?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Free for personal and noncommercial use under BUSL-1.1 (MIT from 2030). Commercial use is by written agreement — see the license page." }
+    }
+  ]
+};
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "TokenHunt",
+  "url": "https://tokenhunt.dev/",
+  "logo": "https://tokenhunt.dev/favicon.svg",
+  "founder": { "@type": "Person", "name": "Jordan Newell", "url": "https://jordannewell.com" },
+  "sameAs": [
+    "https://x.com/tokenhuntdev",
+    "https://github.com/JordanNewell/token-hunt"
+  ]
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -61,11 +138,12 @@ const tiers = [
     <title>TokenHunt — catch secrets at chat time, not commit time</title>
     <meta name="description" content="Hook-based secret scanner for AI coding agents. token-hunt catches leaks when you paste, when your agent reads, and when its tools return — not at commit time." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta property="og:title" content="TokenHunt — catch secrets at chat time" />
-    <meta property="og:description" content="Secret scanning for the agentic era. Six hooks. Fail-closed. Zero cloud." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://tokenhunt.dev/" />
-    <meta property="og:image" content="https://tokenhunt.dev/og.png" />
+    <Seo
+      title="TokenHunt — catch secrets at chat time, not commit time"
+      description="Hook-based secret scanner for AI coding agents. Six hooks, fail-closed, 48 rules across 53 provider families. Zero cloud, zero telemetry. pip install token-hunt."
+      url="https://tokenhunt.dev/"
+      jsonLd={[appSchema, faqSchema, orgSchema]}
+    />
     <script is:inline>
       try { if (localStorage.getItem('th-theme') === 'light') document.documentElement.classList.add('light'); } catch {}
     </script>
