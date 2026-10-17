@@ -1,0 +1,294 @@
+---
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
+import '@fontsource/jetbrains-mono/700.css';
+import '@fontsource/jetbrains-mono/800.css';
+
+const rows = [
+  ['personal / noncommercial use', 'free', 'ok', 'Including production. Charities, schools, public research, and government agencies all count as noncommercial.'],
+  ['copy, modify, create derivatives', 'free', 'ok', 'For non-production use, per the standard BUSL grant.'],
+  ['redistribution', 'free', 'ok', 'Non-production use. Keep the license and attribution intact.'],
+  ['commercial use', 'written agreement', 'pay', 'Any commercial use — including internal business use — needs a separate written license from the licensor.'],
+  ['after the change date', 'MIT', 'ok', 'On 2030-10-12 (or 4 years after each version\'s first public release, whichever comes first) that version becomes MIT.'],
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>License — TokenHunt</title>
+    <meta name="description" content="token-hunt is licensed under BUSL-1.1: free for personal and noncommercial use, MIT after the 2030 change date, commercial use by written agreement." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content="License — TokenHunt" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tokenhunt.dev/license" />
+    <meta property="og:image" content="https://tokenhunt.dev/og.png" />
+    <script is:inline>
+      try { if (localStorage.getItem('th-theme') === 'light') document.documentElement.classList.add('light'); } catch {}
+    </script>
+  </head>
+  <body>
+    <button class="theme-toggle" type="button" aria-label="toggle day/night theme">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="5" />
+        <line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      </svg>
+    </button>
+    <a class="site-mark" href="/">
+      <svg viewBox="0 0 48 48" role="img" aria-label="tokenhunt mark">
+        <circle cx="24" cy="24" r="17" fill="none" stroke="currentColor" stroke-width="3.5" />
+        <line x1="24" y1="1" x2="24" y2="12" stroke="currentColor" stroke-width="3.5" />
+        <line x1="24" y1="36" x2="24" y2="47" stroke="currentColor" stroke-width="3.5" />
+        <line x1="1" y1="24" x2="12" y2="24" stroke="currentColor" stroke-width="3.5" />
+        <line x1="36" y1="24" x2="47" y2="24" stroke="currentColor" stroke-width="3.5" />
+        <circle cx="24" cy="24" r="4.5" fill="currentColor" />
+      </svg>
+      <span class="cl">home</span>
+    </a>
+
+    <main class="container">
+      <p class="kicker">license</p>
+      <h1>Free until you're <span class="ver">a business</span></h1>
+      <p class="sub">
+        BUSL-1.1 · change date <strong>2030-10-12</strong> → MIT ·
+        <a href="https://github.com/JordanNewell/token-hunt/blob/main/LICENSE">raw license on GitHub</a>
+      </p>
+
+      <section>
+        <h2><span class="sec-num">01</span> The short version</h2>
+        <div class="rows">
+          {rows.map(([what, terms, kind, detail]) => (
+            <div class="row">
+              <div class="row-head">
+                <span class={`pill pill-${kind}`}>{terms}</span>
+                <span class="row-what">{what}</span>
+              </div>
+              <p class="row-detail">{detail}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h2><span class="sec-num">02</span> Why BUSL?</h2>
+        <p>
+          BUSL-1.1 keeps the source open and the playing field honest: you can read every
+          rule, audit the regexes, fork it, and run it — as long as you're not a business
+          building on it. That's the line. Individuals, charities, schools, researchers, and
+          governments pay nothing, forever.
+        </p>
+        <p>
+          Businesses get the same source and the same scanner — under a commercial license
+          that keeps development funded. If you're unsure which side of the line you're on,
+          ask: <a href="mailto:info@tokenhunt.dev?subject=commercial%20license%20inquiry">info@tokenhunt.dev</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="sec-num">03</span> The change date</h2>
+        <p>
+          Every version converts. On <strong>2030-10-12</strong> — or four years after any
+          given version's first public release, whichever comes first — that version drops
+          BUSL and becomes available under the <strong>MIT license</strong>. No carve-outs
+          expire, nothing is revoked. The code always ends up open source.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="sec-num">04</span> Commercial licensing</h2>
+        <p>
+          token-hunt-pro ships under a commercial license with silent redaction, live-key
+          verification, and offline licensing — see the <a href="/">tiers on the front page</a>.
+          For a commercial license on token-hunt itself, or anything else in this neighborhood:
+        </p>
+        <div class="term">
+          <div class="trow"><span class="prompt">→</span><a class="mail" href="mailto:info@tokenhunt.dev?subject=commercial%20license%20inquiry">info@tokenhunt.dev</a></div>
+        </div>
+      </section>
+
+      <p class="back">
+        <a href="/">← tokenhunt.dev</a> ·
+        <a href="/docs">docs</a> ·
+        <a href="/changelog">changelog</a>
+      </p>
+    </main>
+
+    <!-- ============ footer ============ -->
+    <footer class="foot">
+      <div class="foot-icons">
+        <a href="https://jordannewell.com" rel="noopener"><img src="/n-logo.png" alt="N" class="newell-logo" loading="lazy" /></a>
+      </div>
+    </footer>
+
+    <style>
+      :root {
+        --bg: #0C0D10;
+        --surface: #121317;
+        --border: #1F2126;
+        --text: #F4F3EF;
+        --muted: #8A8F98;
+        --accent: #FF5A1F;
+        --alert: #E5484D;
+      }
+      :root.light {
+        --bg: #F7F6F2;
+        --surface: #FFFFFF;
+        --border: #E3E1DB;
+        --text: #15171C;
+        --muted: #686D76;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 0.95rem;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+      }
+      ::selection { background: var(--accent); color: var(--bg); }
+      :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+      ::-webkit-scrollbar { width: 10px; }
+      ::-webkit-scrollbar-track { background: var(--bg); }
+      ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 5px; }
+      a { color: inherit; }
+      .container { max-width: 52rem; margin-inline: auto; padding-block: clamp(9rem, 24vh, 13.5rem) 0; padding-inline: clamp(1.25rem, 4vw, 2rem); }
+
+      /* ---- footer N logo (interleaf canonical) ---- */
+      body { min-height: 100svh; display: flex; flex-direction: column; }
+      .foot { margin-top: auto; padding-top: 96px; padding-bottom: 40px; }
+      .foot-icons { display: flex; justify-content: center; }
+      .newell-logo { display: block; height: 28px; width: auto; opacity: 0.9; }
+      .foot a:hover .newell-logo { opacity: 1; }
+      @media (max-width: 640px) {
+        .newell-logo { height: 24px; }
+      }
+
+      .site-mark {
+        position: absolute;
+        top: 40px;
+        right: clamp(1.5rem, 3.2vw, 3.5rem);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.6rem;
+        text-decoration: none;
+      }
+      .site-mark svg { width: 120px; height: 120px; color: var(--accent); }
+      @media (max-width: 640px) {
+        .site-mark { top: 1.5rem; }
+        .site-mark svg { width: 56px; height: 56px; }
+      }
+      .site-mark .cl {
+        font-size: 0.68rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+      }
+      .site-mark:hover .cl { color: var(--accent); }
+
+      /* ---- theme toggle ---- */
+      .theme-toggle {
+        position: absolute;
+        top: 40px;
+        left: clamp(1.5rem, 3.2vw, 3.5rem);
+        width: 44px;
+        height: 44px;
+        display: grid;
+        place-items: center;
+        background: none;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--muted);
+        cursor: pointer;
+      }
+      .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+      .theme-toggle svg { width: 20px; height: 20px; }
+      .theme-toggle .sun { display: none; }
+      :root.light .theme-toggle .moon { display: none; }
+      :root.light .theme-toggle .sun { display: block; }
+      @media (max-width: 640px) {
+        .theme-toggle { top: 1.5rem; }
+      }
+
+      .kicker {
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.75rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+      }
+      h1 {
+        font-size: clamp(1.8rem, 5vw, 2.6rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        margin-bottom: 0.75rem;
+      }
+      h1 .ver { color: var(--accent); }
+      .sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
+      .sub a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+      .sub a:hover { color: var(--accent); }
+      .sub strong { color: var(--text); font-weight: 700; }
+
+      section { border-top: 1px solid var(--border); padding-block: 2.75rem; }
+      section > p { margin-bottom: 1.25rem; max-width: 64ch; }
+      h2 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        margin-bottom: 1.5rem;
+      }
+      .sec-num { color: var(--accent); font-weight: 500; font-size: 0.8em; margin-right: 0.75rem; }
+
+      /* ---- short version rows ---- */
+      .rows { border-top: 1px solid var(--border); }
+      .row { padding-block: 1.1rem; border-bottom: 1px solid var(--border); }
+      .row-head { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+      .pill {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        padding: 0.2rem 0.6rem;
+        border-radius: 4px;
+        white-space: nowrap;
+      }
+      .pill-ok { background: none; color: var(--accent); border: 1px solid var(--accent); }
+      .pill-pay { background: var(--alert); color: var(--bg); }
+      .row-what { font-weight: 700; font-size: 0.92rem; }
+      .row-detail { color: var(--muted); font-size: 0.85rem; margin-top: 0.4rem; max-width: 64ch; }
+
+      /* ---- contact term ---- */
+      .term {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--accent);
+        border-radius: 4px;
+        padding: 1rem 1.25rem;
+      }
+      .trow { display: flex; align-items: baseline; gap: 0.75rem; }
+      .prompt { color: var(--accent); user-select: none; }
+      .mail { font-weight: 700; text-decoration: none; }
+      .mail:hover { color: var(--accent); }
+
+      .back { margin-top: 3rem; font-size: 0.85rem; display: flex; gap: 1.75rem; }
+      .back a { color: var(--muted); text-decoration: none; }
+      .back a:hover { color: var(--accent); }
+    </style>
+    <script is:inline>
+      document.querySelector('.theme-toggle').addEventListener('click', () => {
+        const light = document.documentElement.classList.toggle('light');
+        try { localStorage.setItem('th-theme', light ? 'light' : 'dark'); } catch {}
+      });
+    </script>
+  </body>
+</html>
