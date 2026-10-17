@@ -48,8 +48,23 @@ const releases = [
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://tokenhunt.dev/changelog" />
     <meta property="og:image" content="https://tokenhunt.dev/og.png" />
+    <script is:inline>
+      try { if (localStorage.getItem('th-theme') === 'light') document.documentElement.classList.add('light'); } catch {}
+    </script>
   </head>
   <body>
+    <button class="theme-toggle" type="button" aria-label="toggle day/night theme">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="5" />
+        <line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      </svg>
+    </button>
     <a class="site-mark" href="/">
       <svg viewBox="0 0 48 48" role="img" aria-label="tokenhunt mark">
         <circle cx="24" cy="24" r="17" fill="none" stroke="currentColor" stroke-width="3.5" />
@@ -89,8 +104,9 @@ const releases = [
         </section>
       ))}
 
-      <p class="back"><a href="/">← back to tokenhunt.dev</a> · <a href="/docs">docs</a></p>
+      <p class="back"><a href="/">← back to tokenhunt.dev</a> · <a href="/docs">docs</a> · <a href="/license">license</a></p>
     </main>
+
 
     <style>
       :root {
@@ -102,6 +118,13 @@ const releases = [
         --accent: #FF5A1F;
         --alert: #E5484D;
       }
+      :root.light {
+        --bg: #F7F6F2;
+        --surface: #FFFFFF;
+        --border: #E3E1DB;
+        --text: #15171C;
+        --muted: #686D76;
+      }
       * { box-sizing: border-box; margin: 0; padding: 0; }
       body {
         background: var(--bg);
@@ -110,7 +133,6 @@ const releases = [
         font-size: 0.95rem;
         line-height: 1.65;
         -webkit-font-smoothing: antialiased;
-        padding-block: calc(4rem + 23px) 6rem;
       }
       ::selection { background: var(--accent); color: var(--bg); }
       :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
@@ -122,7 +144,8 @@ const releases = [
         padding: 0.1em 0.35em;
       }
       a { color: inherit; }
-      .container { max-width: 46rem; margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 2rem); }
+      .container { max-width: 46rem; margin-inline: auto; padding-block: clamp(9rem, 24vh, 13.5rem) 6rem; padding-inline: clamp(1.25rem, 4vw, 2rem); }
+
 
       .site-mark {
         position: absolute;
@@ -138,6 +161,30 @@ const releases = [
       @media (max-width: 640px) {
         .site-mark { top: 1.5rem; }
         .site-mark svg { width: 56px; height: 56px; }
+      }
+
+      /* ---- theme toggle ---- */
+      .theme-toggle {
+        position: absolute;
+        top: 40px;
+        left: clamp(1.5rem, 3.2vw, 3.5rem);
+        width: 44px;
+        height: 44px;
+        display: grid;
+        place-items: center;
+        background: none;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--muted);
+        cursor: pointer;
+      }
+      .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+      .theme-toggle svg { width: 20px; height: 20px; }
+      .theme-toggle .sun { display: none; }
+      :root.light .theme-toggle .moon { display: none; }
+      :root.light .theme-toggle .sun { display: block; }
+      @media (max-width: 640px) {
+        .theme-toggle { top: 1.5rem; }
       }
       .site-mark .cl {
         font-size: 0.68rem;
@@ -222,5 +269,11 @@ const releases = [
       .back a { color: var(--muted); text-decoration: none; }
       .back a:hover { color: var(--accent); }
     </style>
+    <script is:inline>
+      document.querySelector('.theme-toggle').addEventListener('click', () => {
+        const light = document.documentElement.classList.toggle('light');
+        try { localStorage.setItem('th-theme', light ? 'light' : 'dark'); } catch {}
+      });
+    </script>
   </body>
 </html>
