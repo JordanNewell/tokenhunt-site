@@ -465,7 +465,6 @@ const orgSchema = {
         .site-mark svg { width: 48px; height: 48px; }
         .corner-nav { margin-top: 1rem; }
         .theme-toggle { top: 1.5rem; }
-        .hero { padding-block: clamp(14.5rem, 28vh, 16rem) clamp(4rem, 10vh, 6rem); }
         .foot-n { height: 24px; }
       }
 
@@ -722,6 +721,13 @@ const orgSchema = {
         .tier { grid-template-columns: 2.5rem minmax(0, 1fr); }
         .tier-cta { display: none; }
         .hooks td:nth-child(2), .hooks th:nth-child(2) { display: none; }
+      }
+      /* wordmark rises to sit left of the nav stack, above the socials row —
+         must come after the base rules or the cascade overrides it */
+      @media (max-width: 640px) {
+        .hero { padding-top: 5.5rem; }
+        .wordmark { font-size: clamp(2rem, 10.5vw, 2.75rem); }
+        .tagline { margin-top: 6rem; }
       }
     </style>
     <script is:inline>
