@@ -194,7 +194,6 @@ const orgSchema = {
     </button>
     <!-- ============ hero ============ -->
     <header class="hero container">
-      <p class="kicker reveal">secret scanning for the agentic era</p>
       <h1 class="reveal wordmark">
         t<span class="sr-only">o</span><svg class="reticle" viewBox="0 0 48 48" role="presentation" aria-hidden="true">
           <circle cx="24" cy="24" r="17" fill="none" stroke="currentColor" stroke-width="3.5" />
@@ -206,6 +205,7 @@ const orgSchema = {
         </svg>kenhunt
       </h1>
       <p class="tagline reveal">Catch secrets at <em>chat time</em>, not commit time.</p>
+      <p class="kicker reveal">secret scanning for the agentic era</p>
       <p class="lede reveal">
         By the time you run <code>git commit</code>, your key has been sitting in the agent
         transcript for 30 minutes — indexed, synced, maybe re-emitted by a later tool call.
@@ -399,7 +399,7 @@ const orgSchema = {
       a { color: inherit; }
 
       /* ---- hero ---- */
-      .hero { padding-block: clamp(13.5rem, 24vh, 16rem) clamp(5rem, 12vh, 8rem); position: relative; }
+      .hero { padding-block: clamp(5rem, 12vh, 7rem) clamp(5rem, 12vh, 8rem); position: relative; }
 
       .site-nav {
         position: absolute;
@@ -422,10 +422,10 @@ const orgSchema = {
         margin-top: 1.4rem;
       }
 
-      /* ---- frame: corner brackets starting at the content-start line ---- */
+      /* ---- frame: corner brackets hugging the viewport ---- */
       .frame {
         position: fixed;
-        inset: calc(clamp(13.5rem, 24vh, 16rem) + 12px) clamp(0.75rem, 1.5vw, 1.25rem) 1.5rem;
+        inset: 1rem clamp(0.75rem, 1.5vw, 1.25rem) 1.5rem;
         pointer-events: none;
         z-index: 5;
       }
@@ -435,7 +435,7 @@ const orgSchema = {
       .frame .bl { bottom: 0; left: 0; border-bottom-width: 2px; border-left-width: 2px; }
       .frame .br { bottom: 0; right: 0; border-bottom-width: 2px; border-right-width: 2px; }
       @media (max-width: 640px) {
-        .frame { inset: calc(clamp(14.5rem, 28vh, 16rem) + 12px) 1rem 1rem; }
+        .frame { inset: 1rem 1rem 1rem; }
         .frame i { width: 16px; height: 16px; }
       }
 
@@ -466,7 +466,6 @@ const orgSchema = {
         .corner-nav { margin-top: 1rem; }
         .theme-toggle { top: 1.5rem; }
         .hero { padding-block: clamp(14.5rem, 28vh, 16rem) clamp(4rem, 10vh, 6rem); }
-        .kicker { margin-top: 2rem; }
         .foot-n { height: 24px; }
       }
 
@@ -476,7 +475,8 @@ const orgSchema = {
         letter-spacing: 0.12em;
         font-size: 0.8rem;
         font-weight: 500;
-        margin-bottom: 2.5rem;
+        margin-top: 1.5rem;
+        max-width: 30ch;
       }
       .wordmark {
         font-size: clamp(3rem, 9vw, 6rem);
