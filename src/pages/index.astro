@@ -48,8 +48,8 @@ const tiers = [
     name: 'token-hunt-pro',
     tag: 'commercial',
     desc: 'Silent redaction — the agent never sees the raw value. Active verification — checks whether a found key is actually live against GitHub, Stripe, and Slack. Offline ed25519 licensing. Zero phone-home.',
-    cta: 'join the waitlist — info@tokenhunt.dev',
-    href: 'mailto:info@tokenhunt.dev?subject=token-hunt-pro%20waitlist',
+    cta: 'join the waitlist',
+    href: '#email',
   },
 ];
 import Seo from "../components/Seo.astro";
@@ -171,7 +171,7 @@ const orgSchema = {
             </svg>
           </a>
           <a class="circ" href="/license" aria-label="license — © 2026 Jordan Newell" title="© 2026 Jordan Newell — license">©</a>
-          <a class="circ" href="mailto:info@tokenhunt.dev" aria-label="email info@tokenhunt.dev" title="info@tokenhunt.dev">
+          <a class="circ email-link" href="#" aria-label="email TokenHunt" title="email TokenHunt">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <rect x="2" y="4" width="20" height="16" rx="2" />
               <path d="m22 7-10 6L2 7" />
@@ -735,6 +735,15 @@ const orgSchema = {
         const light = document.documentElement.classList.toggle('light');
         try { localStorage.setItem('th-theme', light ? 'light' : 'dark'); } catch {}
       });
+      // cloak the contact address — assembled at click time, never in raw HTML
+      var _thMail = ['ved.tnuhnekot', 'ofni'].map(function (s) { return s.split('').reverse().join(''); }).reverse().join('@');
+      function _thUncloak(el) {
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          window.location.href = 'mailto:' + _thMail + (el.classList.contains('tier') ? '?subject=token-hunt-pro%20waitlist' : '');
+        });
+      }
+      document.querySelectorAll('.email-link, a.tier[href="#email"]').forEach(_thUncloak);
     </script>
   </body>
 </html>

@@ -99,7 +99,7 @@ const crumbSchema = {
         <p>
           Businesses get the same source and the same scanner — under a commercial license
           that keeps development funded. If you're unsure which side of the line you're on,
-          ask: <a href="mailto:info@tokenhunt.dev?subject=commercial%20license%20inquiry">info@tokenhunt.dev</a>.
+          ask: <a href="#" class="email-link" data-subject="commercial%20license%20inquiry">info <span class="at">[at]</span> tokenhunt.dev</a>.
         </p>
       </section>
 
@@ -121,7 +121,7 @@ const crumbSchema = {
           For a commercial license on token-hunt itself, or anything else in this neighborhood:
         </p>
         <div class="term">
-          <div class="trow"><span class="prompt">→</span><a class="mail" href="mailto:info@tokenhunt.dev?subject=commercial%20license%20inquiry">info@tokenhunt.dev</a></div>
+          <div class="trow"><span class="prompt">→</span><a class="mail email-link" href="#" data-subject="commercial%20license%20inquiry">info <span class="at">[at]</span> tokenhunt.dev</a></div>
         </div>
       </section>
 
@@ -295,11 +295,20 @@ const crumbSchema = {
       .back { margin-top: 3rem; font-size: 0.85rem; display: flex; gap: 1.75rem; }
       .back a { color: var(--muted); text-decoration: none; }
       .back a:hover { color: var(--accent); }
+      .email-link .at { color: var(--muted); }
     </style>
     <script is:inline>
       document.querySelector('.theme-toggle').addEventListener('click', () => {
         const light = document.documentElement.classList.toggle('light');
         try { localStorage.setItem('th-theme', light ? 'light' : 'dark'); } catch {}
+      });
+      // cloak the contact address — assembled at click time, never in raw HTML
+      var _thMail = ['ved.tnuhnekot', 'ofni'].map(function (s) { return s.split('').reverse().join(''); }).reverse().join('@');
+      document.querySelectorAll('.email-link').forEach(function (el) {
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          window.location.href = 'mailto:' + _thMail + (el.dataset.subject ? '?subject=' + el.dataset.subject : '');
+        });
       });
     </script>
   </body>
