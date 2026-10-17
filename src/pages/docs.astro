@@ -333,6 +333,7 @@ const crumbSchema = {
         border: 1px solid var(--border);
         border-radius: 4px;
         padding: 0.1em 0.35em;
+        overflow-wrap: anywhere;
       }
       a { color: inherit; }
       .container { max-width: 52rem; margin-inline: auto; padding-block: clamp(9rem, 24vh, 13.5rem) 0; padding-inline: clamp(1.25rem, 4vw, 2rem); }
@@ -575,9 +576,15 @@ const crumbSchema = {
       .back a:hover { color: var(--accent); }
 
       @media (max-width: 56rem) {
-        .ex-grid { grid-template-columns: 1fr; }
-        .env-row { grid-template-columns: 1fr; gap: 0.25rem; }
+        .ex-grid { grid-template-columns: minmax(0, 1fr); }
+        .env-row { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
         td:nth-child(2), th:nth-child(2) { display: none; }
+        .term .row { white-space: normal; }
+        .layers li { flex-wrap: wrap; }
+        .cmd-line code { overflow-wrap: anywhere; }
+        .env-row code { white-space: normal; }
+        .back { flex-wrap: wrap; }
+        .file { white-space: pre-wrap; overflow-wrap: anywhere; }
       }
     </style>
     <script is:inline>
